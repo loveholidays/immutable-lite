@@ -3626,33 +3626,33 @@
 
   // createClass(Record, KeyedCollection);
 
-  //   function Record(defaultValues, name) {
-  //     var hasInitialized;
+    // function Record(defaultValues, name) {
+    //   var hasInitialized;
 
-  //     var RecordType = function Record(values) {
-  //       if (values instanceof RecordType) {
-  //         return values;
-  //       }
-  //       if (!(this instanceof RecordType)) {
-  //         return new RecordType(values);
-  //       }
-  //       if (!hasInitialized) {
-  //         hasInitialized = true;
-  //         var keys = Object.keys(defaultValues);
-  //         setProps(RecordTypePrototype, keys);
-  //         RecordTypePrototype.size = keys.length;
-  //         RecordTypePrototype._name = name;
-  //         RecordTypePrototype._keys = keys;
-  //         RecordTypePrototype._defaultValues = defaultValues;
-  //       }
-  //       this._map = Map(values);
-  //     };
+    //   var RecordType = function Record(values) {
+    //     if (values instanceof RecordType) {
+    //       return values;
+    //     }
+    //     if (!(this instanceof RecordType)) {
+    //       return new RecordType(values);
+    //     }
+    //     if (!hasInitialized) {
+    //       hasInitialized = true;
+    //       var keys = Object.keys(defaultValues);
+    //       setProps(RecordTypePrototype, keys);
+    //       RecordTypePrototype.size = keys.length;
+    //       RecordTypePrototype._name = name;
+    //       RecordTypePrototype._keys = keys;
+    //       RecordTypePrototype._defaultValues = defaultValues;
+    //     }
+    //     this._map = Map(values);
+    //   };
 
-  //     var RecordTypePrototype = RecordType.prototype = Object.create(RecordPrototype);
-  //     RecordTypePrototype.constructor = RecordType;
+    //   var RecordTypePrototype = RecordType.prototype = Object.create(RecordPrototype);
+    //   RecordTypePrototype.constructor = RecordType;
 
-  //     return RecordType;
-  //   }
+    //   return RecordType;
+    // }
 
   //   Record.prototype.toString = function() {
   //     return this.__toString(recordName(this) + ' {', '}');
@@ -4019,9 +4019,9 @@
     return EMPTY_ORDERED_SET || (EMPTY_ORDERED_SET = makeOrderedSet(emptyOrderedMap()));
   }
 
-  createClass(Stack, IndexedCollection);
+  // createClass(Stack, IndexedCollection);
 
-    // @pragma Construction
+  //   // @pragma Construction
 
     function Stack(value) {
       return value === null || value === undefined ? emptyStack() :
@@ -4029,179 +4029,179 @@
         emptyStack().unshiftAll(value);
     }
 
-    Stack.of = function(/*...values*/) {
-      return this(arguments);
-    };
+  //   Stack.of = function(/*...values*/) {
+  //     return this(arguments);
+  //   };
 
-    Stack.prototype.toString = function() {
-      return this.__toString('Stack [', ']');
-    };
+  //   Stack.prototype.toString = function() {
+  //     return this.__toString('Stack [', ']');
+  //   };
 
-    // @pragma Access
+  //   // @pragma Access
 
-    Stack.prototype.get = function(index, notSetValue) {
-      var head = this._head;
-      index = wrapIndex(this, index);
-      while (head && index--) {
-        head = head.next;
-      }
-      return head ? head.value : notSetValue;
-    };
+  //   Stack.prototype.get = function(index, notSetValue) {
+  //     var head = this._head;
+  //     index = wrapIndex(this, index);
+  //     while (head && index--) {
+  //       head = head.next;
+  //     }
+  //     return head ? head.value : notSetValue;
+  //   };
 
-    Stack.prototype.peek = function() {
-      return this._head && this._head.value;
-    };
+  //   Stack.prototype.peek = function() {
+  //     return this._head && this._head.value;
+  //   };
 
-    // @pragma Modification
+  //   // @pragma Modification
 
-    Stack.prototype.push = function(/*...values*/) {
-      if (arguments.length === 0) {
-        return this;
-      }
-      var newSize = this.size + arguments.length;
-      var head = this._head;
-      for (var ii = arguments.length - 1; ii >= 0; ii--) {
-        head = {
-          value: arguments[ii],
-          next: head
-        };
-      }
-      if (this.__ownerID) {
-        this.size = newSize;
-        this._head = head;
-        this.__hash = undefined;
-        this.__altered = true;
-        return this;
-      }
-      return makeStack(newSize, head);
-    };
+  //   Stack.prototype.push = function(/*...values*/) {
+  //     if (arguments.length === 0) {
+  //       return this;
+  //     }
+  //     var newSize = this.size + arguments.length;
+  //     var head = this._head;
+  //     for (var ii = arguments.length - 1; ii >= 0; ii--) {
+  //       head = {
+  //         value: arguments[ii],
+  //         next: head
+  //       };
+  //     }
+  //     if (this.__ownerID) {
+  //       this.size = newSize;
+  //       this._head = head;
+  //       this.__hash = undefined;
+  //       this.__altered = true;
+  //       return this;
+  //     }
+  //     return makeStack(newSize, head);
+  //   };
 
-    Stack.prototype.pushAll = function(iter) {
-      iter = IndexedIterable(iter);
-      if (iter.size === 0) {
-        return this;
-      }
-      assertNotInfinite(iter.size);
-      var newSize = this.size;
-      var head = this._head;
-      iter.reverse().forEach(function(value ) {
-        newSize++;
-        head = {
-          value: value,
-          next: head
-        };
-      });
-      if (this.__ownerID) {
-        this.size = newSize;
-        this._head = head;
-        this.__hash = undefined;
-        this.__altered = true;
-        return this;
-      }
-      return makeStack(newSize, head);
-    };
+  //   Stack.prototype.pushAll = function(iter) {
+  //     iter = IndexedIterable(iter);
+  //     if (iter.size === 0) {
+  //       return this;
+  //     }
+  //     assertNotInfinite(iter.size);
+  //     var newSize = this.size;
+  //     var head = this._head;
+  //     iter.reverse().forEach(function(value ) {
+  //       newSize++;
+  //       head = {
+  //         value: value,
+  //         next: head
+  //       };
+  //     });
+  //     if (this.__ownerID) {
+  //       this.size = newSize;
+  //       this._head = head;
+  //       this.__hash = undefined;
+  //       this.__altered = true;
+  //       return this;
+  //     }
+  //     return makeStack(newSize, head);
+  //   };
 
-    Stack.prototype.pop = function() {
-      return this.slice(1);
-    };
+  //   Stack.prototype.pop = function() {
+  //     return this.slice(1);
+  //   };
 
-    Stack.prototype.unshift = function(/*...values*/) {
-      return this.push.apply(this, arguments);
-    };
+  //   Stack.prototype.unshift = function(/*...values*/) {
+  //     return this.push.apply(this, arguments);
+  //   };
 
-    Stack.prototype.unshiftAll = function(iter) {
-      return this.pushAll(iter);
-    };
+  //   Stack.prototype.unshiftAll = function(iter) {
+  //     return this.pushAll(iter);
+  //   };
 
-    Stack.prototype.shift = function() {
-      return this.pop.apply(this, arguments);
-    };
+  //   Stack.prototype.shift = function() {
+  //     return this.pop.apply(this, arguments);
+  //   };
 
-    Stack.prototype.clear = function() {
-      if (this.size === 0) {
-        return this;
-      }
-      if (this.__ownerID) {
-        this.size = 0;
-        this._head = undefined;
-        this.__hash = undefined;
-        this.__altered = true;
-        return this;
-      }
-      return emptyStack();
-    };
+  //   Stack.prototype.clear = function() {
+  //     if (this.size === 0) {
+  //       return this;
+  //     }
+  //     if (this.__ownerID) {
+  //       this.size = 0;
+  //       this._head = undefined;
+  //       this.__hash = undefined;
+  //       this.__altered = true;
+  //       return this;
+  //     }
+  //     return emptyStack();
+  //   };
 
-    Stack.prototype.slice = function(begin, end) {
-      if (wholeSlice(begin, end, this.size)) {
-        return this;
-      }
-      var resolvedBegin = resolveBegin(begin, this.size);
-      var resolvedEnd = resolveEnd(end, this.size);
-      if (resolvedEnd !== this.size) {
-        // super.slice(begin, end);
-        return IndexedCollection.prototype.slice.call(this, begin, end);
-      }
-      var newSize = this.size - resolvedBegin;
-      var head = this._head;
-      while (resolvedBegin--) {
-        head = head.next;
-      }
-      if (this.__ownerID) {
-        this.size = newSize;
-        this._head = head;
-        this.__hash = undefined;
-        this.__altered = true;
-        return this;
-      }
-      return makeStack(newSize, head);
-    };
+  //   Stack.prototype.slice = function(begin, end) {
+  //     if (wholeSlice(begin, end, this.size)) {
+  //       return this;
+  //     }
+  //     var resolvedBegin = resolveBegin(begin, this.size);
+  //     var resolvedEnd = resolveEnd(end, this.size);
+  //     if (resolvedEnd !== this.size) {
+  //       // super.slice(begin, end);
+  //       return IndexedCollection.prototype.slice.call(this, begin, end);
+  //     }
+  //     var newSize = this.size - resolvedBegin;
+  //     var head = this._head;
+  //     while (resolvedBegin--) {
+  //       head = head.next;
+  //     }
+  //     if (this.__ownerID) {
+  //       this.size = newSize;
+  //       this._head = head;
+  //       this.__hash = undefined;
+  //       this.__altered = true;
+  //       return this;
+  //     }
+  //     return makeStack(newSize, head);
+  //   };
 
-    // @pragma Mutability
+  //   // @pragma Mutability
 
-    Stack.prototype.__ensureOwner = function(ownerID) {
-      if (ownerID === this.__ownerID) {
-        return this;
-      }
-      if (!ownerID) {
-        this.__ownerID = ownerID;
-        this.__altered = false;
-        return this;
-      }
-      return makeStack(this.size, this._head, ownerID, this.__hash);
-    };
+  //   Stack.prototype.__ensureOwner = function(ownerID) {
+  //     if (ownerID === this.__ownerID) {
+  //       return this;
+  //     }
+  //     if (!ownerID) {
+  //       this.__ownerID = ownerID;
+  //       this.__altered = false;
+  //       return this;
+  //     }
+  //     return makeStack(this.size, this._head, ownerID, this.__hash);
+  //   };
 
-    // @pragma Iteration
+  //   // @pragma Iteration
 
-    Stack.prototype.__iterate = function(fn, reverse) {
-      if (reverse) {
-        return this.reverse().__iterate(fn);
-      }
-      var iterations = 0;
-      var node = this._head;
-      while (node) {
-        if (fn(node.value, iterations++, this) === false) {
-          break;
-        }
-        node = node.next;
-      }
-      return iterations;
-    };
+  //   Stack.prototype.__iterate = function(fn, reverse) {
+  //     if (reverse) {
+  //       return this.reverse().__iterate(fn);
+  //     }
+  //     var iterations = 0;
+  //     var node = this._head;
+  //     while (node) {
+  //       if (fn(node.value, iterations++, this) === false) {
+  //         break;
+  //       }
+  //       node = node.next;
+  //     }
+  //     return iterations;
+  //   };
 
-    Stack.prototype.__iterator = function(type, reverse) {
-      if (reverse) {
-        return this.reverse().__iterator(type);
-      }
-      var iterations = 0;
-      var node = this._head;
-      return new Iterator(function()  {
-        if (node) {
-          var value = node.value;
-          node = node.next;
-          return iteratorValue(type, iterations++, value);
-        }
-        return iteratorDone();
-      });
-    };
+  //   Stack.prototype.__iterator = function(type, reverse) {
+  //     if (reverse) {
+  //       return this.reverse().__iterator(type);
+  //     }
+  //     var iterations = 0;
+  //     var node = this._head;
+  //     return new Iterator(function()  {
+  //       if (node) {
+  //         var value = node.value;
+  //         node = node.next;
+  //         return iteratorValue(type, iterations++, value);
+  //       }
+  //       return iteratorDone();
+  //     });
+  //   };
 
 
   function isStack(maybeStack) {
@@ -4210,30 +4210,30 @@
 
   Stack.isStack = isStack;
 
-  var IS_STACK_SENTINEL = '@@__IMMUTABLE_STACK__@@';
+  // var IS_STACK_SENTINEL = '@@__IMMUTABLE_STACK__@@';
 
-  var StackPrototype = Stack.prototype;
-  StackPrototype[IS_STACK_SENTINEL] = true;
-  StackPrototype.withMutations = MapPrototype.withMutations;
-  StackPrototype.asMutable = MapPrototype.asMutable;
-  StackPrototype.asImmutable = MapPrototype.asImmutable;
-  StackPrototype.wasAltered = MapPrototype.wasAltered;
+  // var StackPrototype = Stack.prototype;
+  // StackPrototype[IS_STACK_SENTINEL] = true;
+  // StackPrototype.withMutations = MapPrototype.withMutations;
+  // StackPrototype.asMutable = MapPrototype.asMutable;
+  // StackPrototype.asImmutable = MapPrototype.asImmutable;
+  // StackPrototype.wasAltered = MapPrototype.wasAltered;
 
 
-  function makeStack(size, head, ownerID, hash) {
-    var map = Object.create(StackPrototype);
-    map.size = size;
-    map._head = head;
-    map.__ownerID = ownerID;
-    map.__hash = hash;
-    map.__altered = false;
-    return map;
-  }
+  // function makeStack(size, head, ownerID, hash) {
+  //   var map = Object.create(StackPrototype);
+  //   map.size = size;
+  //   map._head = head;
+  //   map.__ownerID = ownerID;
+  //   map.__hash = hash;
+  //   map.__altered = false;
+  //   return map;
+  // }
 
-  var EMPTY_STACK;
-  function emptyStack() {
-    return EMPTY_STACK || (EMPTY_STACK = makeStack(0));
-  }
+  // var EMPTY_STACK;
+  // function emptyStack() {
+  //   return EMPTY_STACK || (EMPTY_STACK = makeStack(0));
+  // }
 
   /**
    * Contributes additional methods to a constructor
@@ -4316,10 +4316,10 @@
         this.toSetSeq();
     },
 
-    toStack: function() {
-      // Use Late Binding here to solve the circular dependency.
-      return Stack(isKeyed(this) ? this.valueSeq() : this);
-    },
+    // toStack: function() {
+    //   // Use Late Binding here to solve the circular dependency.
+    //   return Stack(isKeyed(this) ? this.valueSeq() : this);
+    // },
 
     toList: function() {
       // Use Late Binding here to solve the circular dependency.
@@ -4963,7 +4963,7 @@
     Set: Set,
     OrderedSet: OrderedSet,
 
-    // Record: Record,
+    //Record: Record,
     Range: Range,
     Repeat: Repeat,
 
