@@ -3624,147 +3624,147 @@
     return iter;
   }
 
-  createClass(Record, KeyedCollection);
+  // createClass(Record, KeyedCollection);
 
-    function Record(defaultValues, name) {
-      var hasInitialized;
+  //   function Record(defaultValues, name) {
+  //     var hasInitialized;
 
-      var RecordType = function Record(values) {
-        if (values instanceof RecordType) {
-          return values;
-        }
-        if (!(this instanceof RecordType)) {
-          return new RecordType(values);
-        }
-        if (!hasInitialized) {
-          hasInitialized = true;
-          var keys = Object.keys(defaultValues);
-          setProps(RecordTypePrototype, keys);
-          RecordTypePrototype.size = keys.length;
-          RecordTypePrototype._name = name;
-          RecordTypePrototype._keys = keys;
-          RecordTypePrototype._defaultValues = defaultValues;
-        }
-        this._map = Map(values);
-      };
+  //     var RecordType = function Record(values) {
+  //       if (values instanceof RecordType) {
+  //         return values;
+  //       }
+  //       if (!(this instanceof RecordType)) {
+  //         return new RecordType(values);
+  //       }
+  //       if (!hasInitialized) {
+  //         hasInitialized = true;
+  //         var keys = Object.keys(defaultValues);
+  //         setProps(RecordTypePrototype, keys);
+  //         RecordTypePrototype.size = keys.length;
+  //         RecordTypePrototype._name = name;
+  //         RecordTypePrototype._keys = keys;
+  //         RecordTypePrototype._defaultValues = defaultValues;
+  //       }
+  //       this._map = Map(values);
+  //     };
 
-      var RecordTypePrototype = RecordType.prototype = Object.create(RecordPrototype);
-      RecordTypePrototype.constructor = RecordType;
+  //     var RecordTypePrototype = RecordType.prototype = Object.create(RecordPrototype);
+  //     RecordTypePrototype.constructor = RecordType;
 
-      return RecordType;
-    }
+  //     return RecordType;
+  //   }
 
-    Record.prototype.toString = function() {
-      return this.__toString(recordName(this) + ' {', '}');
-    };
+  //   Record.prototype.toString = function() {
+  //     return this.__toString(recordName(this) + ' {', '}');
+  //   };
 
-    // @pragma Access
+  //   // @pragma Access
 
-    Record.prototype.has = function(k) {
-      return this._defaultValues.hasOwnProperty(k);
-    };
+  //   Record.prototype.has = function(k) {
+  //     return this._defaultValues.hasOwnProperty(k);
+  //   };
 
-    Record.prototype.get = function(k, notSetValue) {
-      if (!this.has(k)) {
-        return notSetValue;
-      }
-      var defaultVal = this._defaultValues[k];
-      return this._map ? this._map.get(k, defaultVal) : defaultVal;
-    };
+  //   Record.prototype.get = function(k, notSetValue) {
+  //     if (!this.has(k)) {
+  //       return notSetValue;
+  //     }
+  //     var defaultVal = this._defaultValues[k];
+  //     return this._map ? this._map.get(k, defaultVal) : defaultVal;
+  //   };
 
-    // @pragma Modification
+  //   // @pragma Modification
 
-    Record.prototype.clear = function() {
-      if (this.__ownerID) {
-        this._map && this._map.clear();
-        return this;
-      }
-      var RecordType = this.constructor;
-      return RecordType._empty || (RecordType._empty = makeRecord(this, emptyMap()));
-    };
+  //   Record.prototype.clear = function() {
+  //     if (this.__ownerID) {
+  //       this._map && this._map.clear();
+  //       return this;
+  //     }
+  //     var RecordType = this.constructor;
+  //     return RecordType._empty || (RecordType._empty = makeRecord(this, emptyMap()));
+  //   };
 
-    Record.prototype.set = function(k, v) {
-      if (!this.has(k)) {
-        throw new Error('Cannot set unknown key "' + k + '" on ' + recordName(this));
-      }
-      if (this._map && !this._map.has(k)) {
-        var defaultVal = this._defaultValues[k];
-        if (v === defaultVal) {
-          return this;
-        }
-      }
-      var newMap = this._map && this._map.set(k, v);
-      if (this.__ownerID || newMap === this._map) {
-        return this;
-      }
-      return makeRecord(this, newMap);
-    };
+  //   Record.prototype.set = function(k, v) {
+  //     if (!this.has(k)) {
+  //       throw new Error('Cannot set unknown key "' + k + '" on ' + recordName(this));
+  //     }
+  //     if (this._map && !this._map.has(k)) {
+  //       var defaultVal = this._defaultValues[k];
+  //       if (v === defaultVal) {
+  //         return this;
+  //       }
+  //     }
+  //     var newMap = this._map && this._map.set(k, v);
+  //     if (this.__ownerID || newMap === this._map) {
+  //       return this;
+  //     }
+  //     return makeRecord(this, newMap);
+  //   };
 
-    Record.prototype.remove = function(k) {
-      if (!this.has(k)) {
-        return this;
-      }
-      var newMap = this._map && this._map.remove(k);
-      if (this.__ownerID || newMap === this._map) {
-        return this;
-      }
-      return makeRecord(this, newMap);
-    };
+  //   Record.prototype.remove = function(k) {
+  //     if (!this.has(k)) {
+  //       return this;
+  //     }
+  //     var newMap = this._map && this._map.remove(k);
+  //     if (this.__ownerID || newMap === this._map) {
+  //       return this;
+  //     }
+  //     return makeRecord(this, newMap);
+  //   };
 
-    Record.prototype.wasAltered = function() {
-      return this._map.wasAltered();
-    };
+  //   Record.prototype.wasAltered = function() {
+  //     return this._map.wasAltered();
+  //   };
 
-    Record.prototype.__iterator = function(type, reverse) {var this$0 = this;
-      return KeyedIterable(this._defaultValues).map(function(_, k)  {return this$0.get(k)}).__iterator(type, reverse);
-    };
+  //   Record.prototype.__iterator = function(type, reverse) {var this$0 = this;
+  //     return KeyedIterable(this._defaultValues).map(function(_, k)  {return this$0.get(k)}).__iterator(type, reverse);
+  //   };
 
-    Record.prototype.__iterate = function(fn, reverse) {var this$0 = this;
-      return KeyedIterable(this._defaultValues).map(function(_, k)  {return this$0.get(k)}).__iterate(fn, reverse);
-    };
+  //   Record.prototype.__iterate = function(fn, reverse) {var this$0 = this;
+  //     return KeyedIterable(this._defaultValues).map(function(_, k)  {return this$0.get(k)}).__iterate(fn, reverse);
+  //   };
 
-    Record.prototype.__ensureOwner = function(ownerID) {
-      if (ownerID === this.__ownerID) {
-        return this;
-      }
-      var newMap = this._map && this._map.__ensureOwner(ownerID);
-      if (!ownerID) {
-        this.__ownerID = ownerID;
-        this._map = newMap;
-        return this;
-      }
-      return makeRecord(this, newMap, ownerID);
-    };
-
-
-  var RecordPrototype = Record.prototype;
-  RecordPrototype[DELETE] = RecordPrototype.remove;
-  RecordPrototype.deleteIn =
-  RecordPrototype.removeIn = MapPrototype.removeIn;
-  RecordPrototype.merge = MapPrototype.merge;
-  RecordPrototype.mergeWith = MapPrototype.mergeWith;
-  RecordPrototype.mergeIn = MapPrototype.mergeIn;
-  RecordPrototype.mergeDeep = MapPrototype.mergeDeep;
-  RecordPrototype.mergeDeepWith = MapPrototype.mergeDeepWith;
-  RecordPrototype.mergeDeepIn = MapPrototype.mergeDeepIn;
-  RecordPrototype.setIn = MapPrototype.setIn;
-  RecordPrototype.update = MapPrototype.update;
-  RecordPrototype.updateIn = MapPrototype.updateIn;
-  RecordPrototype.withMutations = MapPrototype.withMutations;
-  RecordPrototype.asMutable = MapPrototype.asMutable;
-  RecordPrototype.asImmutable = MapPrototype.asImmutable;
+  //   Record.prototype.__ensureOwner = function(ownerID) {
+  //     if (ownerID === this.__ownerID) {
+  //       return this;
+  //     }
+  //     var newMap = this._map && this._map.__ensureOwner(ownerID);
+  //     if (!ownerID) {
+  //       this.__ownerID = ownerID;
+  //       this._map = newMap;
+  //       return this;
+  //     }
+  //     return makeRecord(this, newMap, ownerID);
+  //   };
 
 
-  function makeRecord(likeRecord, map, ownerID) {
-    var record = Object.create(Object.getPrototypeOf(likeRecord));
-    record._map = map;
-    record.__ownerID = ownerID;
-    return record;
-  }
+  // var RecordPrototype = Record.prototype;
+  // RecordPrototype[DELETE] = RecordPrototype.remove;
+  // RecordPrototype.deleteIn =
+  // RecordPrototype.removeIn = MapPrototype.removeIn;
+  // RecordPrototype.merge = MapPrototype.merge;
+  // RecordPrototype.mergeWith = MapPrototype.mergeWith;
+  // RecordPrototype.mergeIn = MapPrototype.mergeIn;
+  // RecordPrototype.mergeDeep = MapPrototype.mergeDeep;
+  // RecordPrototype.mergeDeepWith = MapPrototype.mergeDeepWith;
+  // RecordPrototype.mergeDeepIn = MapPrototype.mergeDeepIn;
+  // RecordPrototype.setIn = MapPrototype.setIn;
+  // RecordPrototype.update = MapPrototype.update;
+  // RecordPrototype.updateIn = MapPrototype.updateIn;
+  // RecordPrototype.withMutations = MapPrototype.withMutations;
+  // RecordPrototype.asMutable = MapPrototype.asMutable;
+  // RecordPrototype.asImmutable = MapPrototype.asImmutable;
 
-  function recordName(record) {
-    return record._name || record.constructor.name || 'Record';
-  }
+
+  // function makeRecord(likeRecord, map, ownerID) {
+  //   var record = Object.create(Object.getPrototypeOf(likeRecord));
+  //   record._map = map;
+  //   record.__ownerID = ownerID;
+  //   return record;
+  // }
+
+  // function recordName(record) {
+  //   return record._name || record.constructor.name || 'Record';
+  // }
 
   function setProps(prototype, names) {
     try {
@@ -4963,7 +4963,7 @@
     Set: Set,
     OrderedSet: OrderedSet,
 
-    Record: Record,
+    // Record: Record,
     Range: Range,
     Repeat: Repeat,
 
