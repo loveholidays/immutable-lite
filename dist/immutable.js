@@ -438,45 +438,45 @@
   ObjectSeq.prototype[IS_ORDERED_SENTINEL] = true;
 
 
-  createClass(IterableSeq, IndexedSeq);
-    function IterableSeq(iterable) {
-      this._iterable = iterable;
-      this.size = iterable.length || iterable.size;
-    }
+  // createClass(IterableSeq, IndexedSeq);
+  //   function IterableSeq(iterable) {
+  //     this._iterable = iterable;
+  //     this.size = iterable.length || iterable.size;
+  //   }
 
-    IterableSeq.prototype.__iterateUncached = function(fn, reverse) {
-      if (reverse) {
-        return this.cacheResult().__iterate(fn, reverse);
-      }
-      var iterable = this._iterable;
-      var iterator = getIterator(iterable);
-      var iterations = 0;
-      if (isIterator(iterator)) {
-        var step;
-        while (!(step = iterator.next()).done) {
-          if (fn(step.value, iterations++, this) === false) {
-            break;
-          }
-        }
-      }
-      return iterations;
-    };
+  //   IterableSeq.prototype.__iterateUncached = function(fn, reverse) {
+  //     if (reverse) {
+  //       return this.cacheResult().__iterate(fn, reverse);
+  //     }
+  //     var iterable = this._iterable;
+  //     var iterator = getIterator(iterable);
+  //     var iterations = 0;
+  //     if (isIterator(iterator)) {
+  //       var step;
+  //       while (!(step = iterator.next()).done) {
+  //         if (fn(step.value, iterations++, this) === false) {
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     return iterations;
+  //   };
 
-    IterableSeq.prototype.__iteratorUncached = function(type, reverse) {
-      if (reverse) {
-        return this.cacheResult().__iterator(type, reverse);
-      }
-      var iterable = this._iterable;
-      var iterator = getIterator(iterable);
-      if (!isIterator(iterator)) {
-        return new Iterator(iteratorDone);
-      }
-      var iterations = 0;
-      return new Iterator(function()  {
-        var step = iterator.next();
-        return step.done ? step : iteratorValue(type, iterations++, step.value);
-      });
-    };
+  //   IterableSeq.prototype.__iteratorUncached = function(type, reverse) {
+  //     if (reverse) {
+  //       return this.cacheResult().__iterator(type, reverse);
+  //     }
+  //     var iterable = this._iterable;
+  //     var iterator = getIterator(iterable);
+  //     if (!isIterator(iterator)) {
+  //       return new Iterator(iteratorDone);
+  //     }
+  //     var iterations = 0;
+  //     return new Iterator(function()  {
+  //       var step = iterator.next();
+  //       return step.done ? step : iteratorValue(type, iterations++, step.value);
+  //     });
+  //   };
 
 
 
